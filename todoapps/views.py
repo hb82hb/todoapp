@@ -11,3 +11,10 @@ def topics(request):
     topics = Topic.objects.order_by('date_added')
     context = {'topics': topics}
     return render(request, 'todoapps/topics.html', context)
+
+def topic(request, topic_id):
+    """Show a single topic and all its tasks"""
+    topic = Topic.objects.get(id=topic_id)
+    tasks = topic.task_set.order_by('-date_added')
+    context = {'topic': topic, 'tasks': tasks}
+    return render(request, 'todoapps/topic.html', context)
