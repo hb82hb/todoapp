@@ -8,4 +8,6 @@ app_name = 'todoapps'
 urlpatterns = [
     # Home page
     path('', views.index, name='index'),
+    # Page that shows all topics
+    path('topics/', views.topics, name='topics')
 ]
