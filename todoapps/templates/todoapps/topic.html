@@ -1,5 +1,3 @@
-<link rel='stylesheet' href='main.css' />
-
 {% extends 'todoapps/base.html' %}
 
 {% block content %} 
@@ -7,17 +5,11 @@
     <p>Topic: {{ topic }}</p>
 
     <p>Tasks:</p>
-    <ul style="list-style: none;">
+    <ul style="list-style-type: none;">
     {% for task in tasks %} 
       <li>
-        <!-- <p>{{ task.date_added|date:'M d, Y H:i' }}</p> -->
-        <p>{{ task.text|linebreaks }}</p>
+          <input type="checkbox"> {{ task.text }}
       </li>
-
-      <!-- <li> -->
-      <!--     <input type="checkbox"> {{ task.text|linebreaks }} -->
-      <!-- </li> -->
-
     {% empty %}
       <li>There are no entries for this topic yet.</li>
     {% endfor %}
