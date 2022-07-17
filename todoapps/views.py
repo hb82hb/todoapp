@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from .models import Topic
+from .forms import TopicForm
 
 def index(request):
     """The home page for todoapp"""
@@ -18,3 +19,19 @@ def topic(request, topic_id):
     tasks = topic.task_set.order_by('-date_added')
     context = {'topic': topic, 'tasks': tasks}
     return render(request, 'todoapps/topic.html', context)
+
+def new_topic(request):
+    """Add a new topic"""
+    if request.method != 'POST':
+        # No data submitted; create a blank form
+        form = TopicForm()
+    else:
+        # POST data submitted; process data
+        form = TopicForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('todoapps:topics')
+
+    # Display a blank or invalid form.
+    context = {'form': form}
+    return render(request, 'todoapps/new_topic.html', context)

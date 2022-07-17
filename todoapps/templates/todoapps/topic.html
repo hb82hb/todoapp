@@ -1,18 +1,61 @@
-{% extends 'todoapps/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Todo</title>
+</head>
+<body>
+    {% extends 'todoapps/base.html' %}
 
-{% block content %} 
+    {% block content %} 
 
-    <p>Topic: {{ topic }}</p>
+        <p>Topic: {{ topic }}</p>
 
-    <p>Tasks:</p>
-    <ul style="list-style-type: none;">
-    {% for task in tasks %} 
-      <li>
-          <input type="checkbox"> {{ task.text }}
-      </li>
-    {% empty %}
-      <li>There are no entries for this topic yet.</li>
-    {% endfor %}
-    </ul>
+        <p>Tasks:</p>
+        <ul style="list-style-type: none;">
+        {% for task in tasks %} 
+          <li id="tasks">
+                  <input id="task" type="checkbox">{{ task.text }}
+          </li>
+        {% empty %}
+          <li>There are no tasks for this topic yet.</li>
+        {% endfor %}
+        </ul>
+
+    <script type="text/javascript">
+
+        function App() {}
+
+        App.prototype.setState = function(state) {
+          localStorage.setItem('checked', state);
+        }
+
+        App.prototype.getState = function() {
+          return localStorage.getItem('checked');
+        }
+
+        function init() {
+          let app = new App();
+          let state = app.getState();
+          let checkbox = document.querySelectorAll('#task');
+
+          if (state == 'true') {
+            checkbox.checked = true;
+          }
+
+          checkbox.forEach(checkbox => {
+             checkbox.addEventListener('click', function() {
+               app.setState(checkbox.checked);
+             });
+          });
+
+        }
+
+        init();
+    </script>
 
 {% endblock content %}
+
+</body>

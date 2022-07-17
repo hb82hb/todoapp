@@ -7,11 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-    {% extends "todoapps/base.html" %}
 
-    {% block content %}
+    {% extends "todoapps/base.html" %} 
 
-        <p>todoapps</p>
+    {% block content %} 
+      <p>Add a new topic:</p>
+
+      <form action="{% url 'todoapps:new_topic' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit">Add topic</button>
+      </form>
 
     {% endblock content %}
     
